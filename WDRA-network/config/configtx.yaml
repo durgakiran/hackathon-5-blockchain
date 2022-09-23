@@ -16,7 +16,7 @@ Organizations:
 
     # WDRAOrg defines an MSP using the sampleconfig. It should never be used
     # in production but may be used as a template for other definitions.
-    - &SampleOrg
+    - &WDRAOrg
         # Name is the key by which this org will be referenced in channel
         # configuration transactions.
         # Name can include alphanumeric characters as well as dots and dashes.
@@ -40,7 +40,7 @@ Organizations:
         # Policies defines the set of policies at this level of the config tree
         # For organization policies, their canonical path is usually
         #   /Channel/<Application|Orderer>/<OrgName>/<PolicyName>
-        Policies: &SampleOrgPolicies
+        Policies: &WDRAOrgPolicies
             Readers:
                 Type: Signature
                 Rule: "OR('WDRAOrg.member')"
@@ -75,6 +75,97 @@ Organizations:
         AnchorPeers:
             - Host: 127.0.0.1
               Port: 7051
+    - &BankOrg
+        Name: BankOrg
+        SkipAsForeign: false
+        ID: BankOrg
+        MSPDir: BankOrg
+        Policies: &BankOrgPolicies
+            Readers:
+                Type: Signature
+                Rule: "OR('BankOrg.member')"
+            Writers:
+                Type: Signature
+                Rule: "OR('BankOrg.member')"
+            Admins:
+                Type: Signature
+                Rule: "OR('BankOrg.admin')"
+            Endorsement:
+                Type: Signature
+                Rule: "OR('BankOrg.member')"
+    - &InsuranceOrg
+        Name: InsuranceOrg
+        SkipAsForeign: false
+        ID: InsuranceOrg
+        MSPDir: InsuranceOrg
+        Policies: &InsurancePolicies
+            Readers:
+                Type: Signature
+                Rule: "OR('InsuranceOrg.member')"
+            Writers:
+                Type: Signature
+                Rule: "OR('InsuranceOrg.member')"
+            Admins:
+                Type: Signature
+                Rule: "OR('InsuranceOrg.admin')"
+            Endorsement:
+                Type: Signature
+                Rule: "OR('InsuranceOrg.member')"
+    - &WareHouseOrg
+        Name: WareHouseOrg
+        SkipAsForeign: false
+        ID: WareHouseOrg
+        MSPDir: WareHouseOrg
+        Policies: &WareHousePolicies
+            Readers:
+                Type: Signature
+                Rule: "OR('WareHouseOrg.member')"
+            Writers:
+                Type: Signature
+                Rule: "OR('WareHouseOrg.member')"
+            Admins:
+                Type: Signature
+                Rule: "OR('WareHouseOrg.admin')"
+            Endorsement:
+                Type: Signature
+                Rule: "OR('WareHouseOrg.member')"
+    - &CollateralManagersOrg
+        Name: CollateralManagersOrg
+        SkipAsForeign: false
+        ID: CollateralManagersOrg
+        MSPDir: CollateralManagersOrg
+        Policies: &CollateralManagersOrgPolicies
+            Readers:
+                Type: Signature
+                Rule: "OR('CollateralManagersOrg.member')"
+            Writers:
+                Type: Signature
+                Rule: "OR('CollateralManagersOrg.member')"
+            Admins:
+                Type: Signature
+                Rule: "OR('CollateralManagersOrg.admin')"
+            Endorsement:
+                Type: Signature
+                Rule: "OR('CollateralManagersOrg.member')"
+    - &TransportOrg
+        Name: TransportOrg
+        SkipAsForeign: false
+        ID: TransportOrg
+        MSPDir: TransportOrg
+        Policies: &TransportOrgPolicies
+            Readers:
+                Type: Signature
+                Rule: "OR('TransportOrg.member')"
+            Writers:
+                Type: Signature
+                Rule: "OR('TransportOrg.member')"
+            Admins:
+                Type: Signature
+                Rule: "OR('TransportOrg.admin')"
+            Endorsement:
+                Type: Signature
+                Rule: "OR('TransportOrg.member')"
+
 
 ################################################################################
 #
@@ -439,7 +530,7 @@ Channel: &ChannelDefaults
 #
 ################################################################################
 Profiles:
-    TwoOrgsApplicationGenesis:
+    SixOrgChannel:
         <<: *ChannelDefaults
         Orderer:
             <<: *OrdererDefaults
@@ -449,5 +540,11 @@ Profiles:
         Application:
             <<: *ApplicationDefaults
             Organizations:
+                - *WDRAOrg
+                - *BankOrg
+                - *InsuranceOrg
+                - *WareHouseOrg
+                - *CollateralManagersOrg
+                - *TransportOrg
             Capabilities: *ApplicationCapabilities
     

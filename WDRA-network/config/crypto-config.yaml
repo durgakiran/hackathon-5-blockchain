@@ -10,8 +10,8 @@ OrdererOrgs:
   # ---------------------------------------------------------------------------
   # Orderer
   # ---------------------------------------------------------------------------
-  - Name: Orderer
-    Domain: wdra.orderer.com
+  - Name: WDRAOrg
+    Domain: WDRAOrg.orderer.com
     EnableNodeOUs: true
     # ---------------------------------------------------------------------------
     # "Specs" - See PeerOrgs for complete description

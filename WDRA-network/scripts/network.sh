@@ -25,6 +25,53 @@ function createOrgs() {
         fi
         infoln "Generating certificates using cryptogen tool"
 
+        infoln "Creating BankOrg peer Identities"
+        set -x
+        cryptogen generate --config=../config/crypto-config-bank.yaml --output="../organizations"
+        res=$?
+        { set +x; } 2>/dev/null
+        if [ $res -ne 0 ]; then
+          fatalln "Failed to generate certificates..."
+        fi
+
+        infoln "Creating Collateral peer Identities"
+        set -x
+        cryptogen generate --config=../config/crypto-config-collateral.yaml --output="../organizations"
+        res=$?
+        { set +x; } 2>/dev/null
+        if [ $res -ne 0 ]; then
+          fatalln "Failed to generate certificates..."
+        fi
+
+        infoln "Creating insurance peer Identities"
+        set -x
+        cryptogen generate --config=../config/crypto-config-insurance.yaml --output="../organizations"
+        res=$?
+        { set +x; } 2>/dev/null
+        if [ $res -ne 0 ]; then
+          fatalln "Failed to generate certificates..."
+        fi
+
+        infoln "Creating transport peer Identities"
+        set -x
+        cryptogen generate --config=../config/crypto-config-transport.yaml --output="../organizations"
+        res=$?
+        { set +x; } 2>/dev/null
+        if [ $res -ne 0 ]; then
+          fatalln "Failed to generate certificates..."
+        fi
+
+        infoln "Creating warehouse peer Identities"
+        set -x
+        cryptogen generate --config=../config/crypto-config-warehouse.yaml --output="../organizations"
+        res=$?
+        { set +x; } 2>/dev/null
+        if [ $res -ne 0 ]; then
+          fatalln "Failed to generate certificates..."
+        fi
+
+
+
         infoln "Creating Orderer Org Identities"
 
         set -x
