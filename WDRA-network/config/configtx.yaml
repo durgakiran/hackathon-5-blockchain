@@ -35,7 +35,7 @@ Organizations:
         ID: WDRAOrg
 
         # MSPDir is the filesystem path which contains the MSP configuration.
-        MSPDir: WDRAMSP
+        MSPDir: ../organizations/ordererOrganizations/WDRAOrg.orderer.com/msp
 
         # Policies defines the set of policies at this level of the config tree
         # For organization policies, their canonical path is usually
@@ -79,7 +79,7 @@ Organizations:
         Name: BankOrg
         SkipAsForeign: false
         ID: BankOrg
-        MSPDir: BankOrg
+        MSPDir: ../organizations/peerOrganizations/BankOrg.example.com/msp
         Policies: &BankOrgPolicies
             Readers:
                 Type: Signature
@@ -97,7 +97,7 @@ Organizations:
         Name: InsuranceOrg
         SkipAsForeign: false
         ID: InsuranceOrg
-        MSPDir: InsuranceOrg
+        MSPDir: ../organizations/peerOrganizations/InsuranceOrg.example.com/msp
         Policies: &InsurancePolicies
             Readers:
                 Type: Signature
@@ -115,7 +115,7 @@ Organizations:
         Name: WareHouseOrg
         SkipAsForeign: false
         ID: WareHouseOrg
-        MSPDir: WareHouseOrg
+        MSPDir: ../organizations/peerOrganizations/WareHouseOrg.example.com/msp
         Policies: &WareHousePolicies
             Readers:
                 Type: Signature
@@ -133,7 +133,7 @@ Organizations:
         Name: CollateralManagersOrg
         SkipAsForeign: false
         ID: CollateralManagersOrg
-        MSPDir: CollateralManagersOrg
+        MSPDir: ../organizations/peerOrganizations/CollateralManagersOrg.example.com/msp
         Policies: &CollateralManagersOrgPolicies
             Readers:
                 Type: Signature
@@ -151,7 +151,7 @@ Organizations:
         Name: TransportOrg
         SkipAsForeign: false
         ID: TransportOrg
-        MSPDir: TransportOrg
+        MSPDir: ../organizations/peerOrganizations/TransportOrg.example.com/msp
         Policies: &TransportOrgPolicies
             Readers:
                 Type: Signature
@@ -530,6 +530,22 @@ Channel: &ChannelDefaults
 #
 ################################################################################
 Profiles:
+    SixOrgOrdererGenesis:
+        <<: *ChannelDefaults
+        Orderer:
+            <<: *OrdererDefaults
+            Organizations:
+                - *WDRAOrg
+            Capabilities:
+                <<: *OrdererCapabilities
+        Consortiums:
+            SampleConsortium:
+                Organizations:
+                    - *BankOrg
+                    - *InsuranceOrg
+                    - *WareHouseOrg
+                    - *CollateralManagersOrg
+                    - *TransportOrg
     SixOrgChannel:
         <<: *ChannelDefaults
         Orderer:
